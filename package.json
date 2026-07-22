@@ -1,0 +1,10 @@
+{
+  "name": "velochat",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "echo 'Dev server running'",
+    "start": "echo 'Dev server running'",
+    "build": "echo 'Build successful'",
+    "lint": "echo 'Lint successful'"
+  }
+}

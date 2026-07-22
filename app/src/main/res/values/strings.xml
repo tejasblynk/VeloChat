@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">VeloChat</string>
+    <string name="desc_back_button">Back</string>
+    <string name="desc_profile_pic">Profile Picture</string>
+    <string name="desc_video_call">Video Call</string>
+    <string name="desc_audio_call">Audio Call</string>
+    <string name="desc_send">Send Message</string>
+    <string name="desc_voice_record">Record Voice Note</string>
+    <string name="desc_attach">Attach Media</string>
+    <string name="desc_encryption_badge">End-to-End Encrypted</string>
+    <string name="desc_search">Search Chats</string>
+</resources>

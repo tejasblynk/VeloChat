@@ -1,0 +1,6 @@
+{
+  "name": "VeloChat",
+  "description": "An ultra-fast, end-to-end encrypted messaging application with AI summaries, disappearing media, collaborative tools, and encrypted video calls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
