@@ -5,6 +5,8 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+import androidx.compose.material3.Typography
+
 private val DarkColorScheme = darkColorScheme(
     primary = ElectricBlue,
     secondary = NeonCyan,
@@ -28,7 +30,7 @@ fun MyApplicationTheme(
 ) {
     MaterialTheme(
         colorScheme = DarkColorScheme,
-        typography = Typography,
+        typography = Typography(),
         content = content
     )
 }
