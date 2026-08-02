@@ -52,13 +52,14 @@ class ChatRepository(private val context: Context) {
     }
 
     suspend fun initializeDataIfNeeded() = withContext(Dispatchers.IO) {
-        // Initialize User Profile
-        if (chatDao.getUserProfile() == null) {
-            chatDao.insertUserProfile(UserProfile())
-        }
+        try {
+            // Initialize User Profile
+            if (chatDao.getUserProfile() == null) {
+                chatDao.insertUserProfile(UserProfile())
+            }
 
-        // Initialize Users if table is empty
-        val existingUsers = chatDao.getAllUsers().firstOrNull()
+            // Initialize Users if table is empty
+            val existingUsers = chatDao.getAllUsers().firstOrNull()
         if (existingUsers.isNullOrEmpty()) {
             val coreUsers = listOf(
                 ChatUser("sarah_connor", "Sarah Connor", "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150", "Secure everything. 🔒", "velo_sec_k98s_2f", true, System.currentTimeMillis(), "🛡️ SecOps", "#4CAF50"),
@@ -228,6 +229,9 @@ class ChatRepository(private val context: Context) {
             for (m in sarahMsgs) {
                 chatDao.insertMessage(m)
             }
+        }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -44,6 +44,15 @@ import com.example.data.*
 import com.example.ui.theme.*
 import kotlinx.coroutines.launch
 
+fun parseHexColor(hex: String?, fallback: Color = NeonCyan): Color {
+    if (hex.isNullOrBlank()) return fallback
+    return try {
+        Color(android.graphics.Color.parseColor(hex))
+    } catch (_: Exception) {
+        fallback
+    }
+}
+
 @Composable
 fun ChatAppUI(
     viewModel: ChatViewModel = viewModel(),
@@ -174,7 +183,7 @@ fun ChatsListScreen(viewModel: ChatViewModel) {
             // Unified list of Chats and Groups
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .weight(1f)
             ) {
                 if (filteredGroups.isNotEmpty()) {
@@ -336,7 +345,7 @@ fun MainHeader(profile: UserProfile, onProfileClick: () -> Unit) {
             onClick = onProfileClick,
             shape = RoundedCornerShape(12.dp),
             color = SurfaceDark,
-            border = BorderStroke(1.5.dp, Color(android.graphics.Color.parseColor(profile.activeBorderColor))),
+            border = BorderStroke(1.5.dp, parseHexColor(profile.activeBorderColor, NeonCyan)),
             modifier = Modifier
                 .size(44.dp)
                 .testTag("my_profile_header_btn")
@@ -366,7 +375,7 @@ fun HorizontalOnlineRow(onlineUsers: List<ChatUser>, onUserClick: (ChatUser) -> 
             ) {
                 Box(contentAlignment = Alignment.BottomEnd) {
                     // Profile Image with Custom Glowing Border
-                    val borderColor = user.activeBorderColor?.let { Color(android.graphics.Color.parseColor(it)) } ?: NeonCyan
+                    val borderColor = parseHexColor(user.activeBorderColor, NeonCyan)
                     Box(
                         modifier = Modifier
                             .size(50.dp)
@@ -413,7 +422,7 @@ fun DirectChatItem(user: ChatUser, onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(contentAlignment = Alignment.BottomEnd) {
-            val borderColor = user.activeBorderColor?.let { Color(android.graphics.Color.parseColor(it)) } ?: BorderColor
+            val borderColor = parseHexColor(user.activeBorderColor, BorderColor)
             Box(
                 modifier = Modifier
                     .size(54.dp)
@@ -1485,14 +1494,14 @@ fun ProfileEditScreen(viewModel: ChatViewModel) {
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = { Text("Account Customization", fontWeight = FontWeight.Bold, color = TextPrimary) },
                 navigationIcon = {
                     IconButton(onClick = { viewModel.navigateTo(Screen.CHATS_LIST) }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextPrimary)
                     }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = SurfaceDark)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = SurfaceDark)
             )
         },
         containerColor = ObsidianBg
@@ -1515,14 +1524,14 @@ fun ProfileEditScreen(viewModel: ChatViewModel) {
                     .padding(bottom = 24.dp),
                 shape = RoundedCornerShape(16.dp),
                 color = SurfaceDark,
-                border = BorderStroke(2.dp, Color(android.graphics.Color.parseColor(colorSelected)))
+                border = BorderStroke(2.dp, parseHexColor(colorSelected, NeonCyan))
             ) {
                 Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
                             .size(60.dp)
                             .clip(CircleShape)
-                            .border(2.dp, Color(android.graphics.Color.parseColor(colorSelected)), CircleShape)
+                            .border(2.dp, parseHexColor(colorSelected, NeonCyan), CircleShape)
                     ) {
                         AsyncImage(
                             model = profile.avatarUrl,
@@ -1540,7 +1549,7 @@ fun ProfileEditScreen(viewModel: ChatViewModel) {
                                 Text(
                                     badgeInput,
                                     fontSize = 9.sp,
-                                    color = Color(android.graphics.Color.parseColor(colorSelected)),
+                                    color = parseHexColor(colorSelected, NeonCyan),
                                     fontWeight = FontWeight.Black,
                                     modifier = Modifier
                                         .background(SurfaceLightDark, RoundedCornerShape(4.dp))
@@ -1613,7 +1622,7 @@ fun ProfileEditScreen(viewModel: ChatViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 presetColors.forEach { cStr ->
-                    val color = Color(android.graphics.Color.parseColor(cStr))
+                    val color = parseHexColor(cStr, NeonCyan)
                     Box(
                         modifier = Modifier
                             .size(40.dp)
